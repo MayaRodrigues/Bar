@@ -17,10 +17,6 @@ O objetivo é criar um **site de um bar de jogos de tabuleiro** utilizando **HTM
 
 ## 📂 Estrutura do Projeto  
 
-
-
-## Estrutura do Projeto
-
 📁 bar-de-jogos
 │-- 📂 data/                 # Arquivos de entrada (CSV/JSON)
 │   │-- alimentos.json
