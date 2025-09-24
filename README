@@ -1,16 +1,21 @@
-# Bar de Jogos de Tabuleiro - Projeto Web
+# 🍻 Bar de Jogos de Tabuleiro – Projeto Web  
 
-## 📖 Sobre o Projeto
+## 📖 Sobre o Projeto  
+Este projeto foi desenvolvido como parte da disciplina **Projeto e Desenvolvimento de Sistemas Web (CC6PDSW)**, no curso de **Ciência da Computação – UTFPR**.  
 
-Este projeto foi desenvolvido como parte da disciplina Projeto e Desenvolvimento de Sistemas Web (CC6PDSW), no curso de Ciência da Computação – UTFPR.
+O objetivo é criar um **site de um bar de jogos de tabuleiro** utilizando **HTML, CSS e Python**, onde parte do conteúdo (cardápio de alimentos/bebidas e jogos) é gerado automaticamente a partir de arquivos de entrada.  
 
-O objetivo é criar um site de um bar de jogos de tabuleiro utilizando HTML, CSS e Python, onde parte do conteúdo (cardápio de alimentos/bebidas e jogos) é gerado automaticamente a partir de arquivos de entrada.
+---
 
-## Tecnologias Utilizadas
-* HTML5 → Estrutura do site.
-* CSS3 → Estilização das páginas.
-* Python 3 → Script para gerar os cardápios automaticamente.
-* Arquivos de dados → Formato .csv ou .json para armazenar alimentos, bebidas e jogos.
+## ⚙️ Tecnologias Utilizadas  
+- **HTML5** → Estrutura do site  
+- **CSS3** → Estilização das páginas  
+- **Python 3** → Script para gerar os cardápios automaticamente  
+- **Arquivos de dados** → Formato `.csv` ou `.json` para armazenar alimentos, bebidas e jogos  
+
+---
+
+## 📂 Estrutura do Projeto  
 
 
 
