@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luna & Hops Tavern</title>
+  <link rel="icon" type="image/png" href="/assets/images/logo.png">
+  <link rel ="stylesheet" href="style.css"></head>
+
+<script>
+let counter = 1;
+setInterval(function(){
+  document.getElementById('radio' + counter).checked = true;
+  counter++;
+  if(counter > 4){
+    counter = 1;
+  }
+}, 3000);
+</script>
+
+<body>
+  
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <img src="/assets/images/logo.png" alt="Logo do Bar de Jogos">
+        <h1 class="titulo">Luna & Hops Tavern</h1>
+      </div>
+      <ul class="nav-links">
+        <li class="submenu">
+          <a href="index.html" class="active">Início</a>
+          <ul class="dropdown">
+            <li><a href="#bem-vindo">Quem Somos</a></li>
+            <li><a href="#historia">Historia do Bar</a></li>
+          </ul>
+        </li>
+        <li><a href="cardapio-comidas.html " class="active">Cardápio</a></li>
+        <li><a href="cardapio-jogos.html" class="active">Jogos</a></li>
+      </ul>
+    </nav>
+  </header>
+    
+  <main>
+     <section class="slider">
+    <div class="slides">
+        <input type="radio" name="radio-btn" id="radio1" checked>
+        <input type="radio" name="radio-btn" id="radio2">
+        <input type="radio" name="radio-btn" id="radio3">
+        <input type="radio" name="radio-btn" id="radio4">
+
+        <div class="slide first">
+            <img src="/assets/images/slide 1.png" alt="Imagem 1">
+        </div>
+        <div class="slide">
+            <img src="/assets/images/slide 2.png" alt="Imagem 2">
+        </div>
+        <div class="slide">
+            <img src="/assets/images/slide 3.png " alt="Imagem 3"> 
+        </div>
+        <div class="slide">
+            <img src="/assets/images/slide 4.png " alt="Imagem 4">
+        </div>
+
+        <div class="navigation-manual">
+            <label for="radio1" class="manual-btn"></label>
+            <label for="radio2" class="manual-btn"></label>
+            <label for="radio3" class="manual-btn"></label>
+            <label for="radio4" class="manual-btn"></label>
+        </div>
+    </div>  
+  </section>
+  <section id="bem-vindo" class="bem-vindos">
+    <div class="conteiner">
+      <h2>🌙 Bem-vindo à Luna & Hops Tavern</h2>
+      <p>
+        Entre, viajante. Você acaba de cruzar os portais de um refúgio onde o tempo desacelera,
+        os sabores contam histórias e cada canto guarda uma lenda. Aqui, sob a luz da lua e o aroma 
+        de hidromel encantado, você encontrará mais do que comida e bebida — encontrará experiências.
+      </p>
+      <p>
+      Seja você um bardo em busca de inspiração, um mago faminto por poções, ou apenas alguém querendo escapar 
+      da rotina, a Luna & Hops é seu lar temporário. Sinta-se à vontade para explorar nossos cardápios temáticos,
+      desafiar os jogos da taverna ou se perder nas sessões de RPG que moldam mundos.
+    </p>
+    <br>
+    <br>
+
+    <h2>🧙‍♀️ Quem Somos</h2>
+    <p>
+      Fundada por amantes da fantasia, da boa comida e dos jogos que unem pessoas, 
+      a Luna & Hops nasceu do desejo de criar um espaço onde realidade e imaginação se misturam. 
+      Nossa estética é inspirada em tavernas medievais, com um toque celestial — onde cada drink é uma poção e
+      cada prato, um feitiço.
+    </p>
+
+    <p>
+      Somos um bar temático que celebra o universo geek, místico e lúdico.
+      Aqui, cada detalhe foi pensado para transportar você a um mundo onde a diversão é sagrada, e 
+      a lua sempre brilha sobre boas histórias.
+    </p>
+    </div>
+  </section> 
+
+  <section id="cardapio" class="section">
+    <h2>Cardápio</h2>
+    <p>Link para cardápio...</p>
+  </section>
+
+  <section id="jogos" class="section">
+    <h2>Jogos</h2>
+    <p>Lista de jogos...</p>
+  </section>
+
+
+   <section id="historia" class="section">
+    <h2>Nossa História</h2>
+    <p>Conteúdo da história...</p>
+  </section>
+
+
+  </main>
+
+  <footer>
+     <p>&copy; 2024 Luna & Hops Tavern. | Todos os direitos reservados.</p>
+  </footer>
+</body>
+</html>
