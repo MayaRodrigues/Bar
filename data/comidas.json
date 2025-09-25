@@ -1,0 +1,52 @@
+{
+  "cardapio": {
+    "comidas": [
+      { "nome": "Pizza da Constelação", "descricao": "Pizza artesanal com ingredientes cósmicos e borda lunar" },
+      { "nome": "Hambúrguer do Herói", "descricao": "Hambúrguer suculento com queijo encantado e molho de bravura" },
+      { "nome": "Batatas do Eclipse", "descricao": "Batatas rústicas com tempero sombrio e toque de alho estelar" },
+      { "nome": "Espetinhos Estelares", "descricao": "Espetinhos variados com temperos de outros mundos" },
+      { "nome": "Tábua dos Magos", "descricao": "Seleção de queijos, pães e embutidos mágicos" },
+      { "nome": "Coxinhas Lunares", "descricao": "Coxinhas recheadas com ingredientes secretos da lua" },
+      { "nome": "Ovo de Dragão", "descricao": "Bolinho crocante com recheio picante e casca dourada" },
+      { "nome": "Ensopado Celestial", "descricao": "Ensopado de carne com legumes encantados e caldo ancestral" },
+      { "nome": "Pão do Guardião", "descricao": "Pão artesanal servido com manteiga de ervas místicas" },
+      { "nome": "Anéis de Saturno", "descricao": "Onion rings crocantes com molho de cometa" }
+    ],
+    "bebidas": [
+      { "nome": "Cerveja do Dragão", "descricao": "Cerveja encorpada com espuma flamejante" },
+      { "nome": "Hidromel Encantado", "descricao": "Hidromel artesanal com mel e especiarias mágicas" },
+      { "nome": "Poção do Bardo", "descricao": "Drink doce com frutas vermelhas e rum encantado" },
+      { "nome": "Elixir da Meia-Noite", "descricao": "Coquetel azul profundo com toque cítrico e brilho lunar" },
+      { "nome": "Chá das Estrelas", "descricao": "Infusão de ervas com pétalas de flores celestiais" },
+      { "nome": "Vinho do Oráculo", "descricao": "Vinho tinto misterioso com aroma de profecia" },
+      { "nome": "Água da Fonte Mística", "descricao": "Água mineral servida com gelo de cristal" },
+      { "nome": "Suco do Bosque", "descricao": "Suco natural de frutas silvestres encantadas" },
+      { "nome": "Espuma do Troll", "descricao": "Drink verde gaseificado com sabor exótico" },
+      { "nome": "Café do Feiticeiro", "descricao": "Café forte com toque de canela e magia líquida" }
+    ],
+    "sobremesas": [
+      { "nome": "Doce da Lua Cheia", "descricao": "Cheesecake com calda de frutas vermelhas e brilho lunar" },
+      { "nome": "Brownie Cósmico", "descricao": "Brownie com pedaços de chocolate e estrelas douradas" },
+      { "nome": "Estrelas de Canela", "descricao": "Bolinhos de canela com açúcar brilhante" },
+      { "nome": "Gelato do Oráculo", "descricao": "Sorvete artesanal com sabores misteriosos" },
+      { "nome": "Poção de Baunilha", "descricao": "Milkshake de baunilha com chantilly encantado" },
+      { "nome": "Torta do Portal", "descricao": "Torta de maçã com crosta mágica e aroma de aventura" },
+      { "nome": "Névoa de Chocolate", "descricao": "Mousse de chocolate com cobertura de névoa doce" },
+      { "nome": "Pérolas de Stardust", "descricao": "Trufas brilhantes com recheio celestial" },
+      { "nome": "Biscoitos do Guardião", "descricao": "Biscoitos crocantes com runas de sabor" },
+      { "nome": "Cristais de Framboesa", "descricao": "Docinhos gelados com brilho mágico" }
+    ],
+    "poções_especiais": [
+      { "nome": "Poção da Coragem", "descricao": "Mistura cítrica com toque de gengibre e energia solar" },
+      { "nome": "Poção da Sabedoria", "descricao": "Infusão de chá branco com lavanda e mel" },
+      { "nome": "Poção do Sono Tranquilo", "descricao": "Leite morno com especiarias relaxantes" },
+      { "nome": "Poção da Invisibilidade", "descricao": "Drink transparente com sabor surpreendente" },
+      { "nome": "Poção do Amor", "descricao": "Coquetel rosado com frutas afrodisíacas" },
+      { "nome": "Poção do Caos", "descricao": "Drink multicolorido com sabor imprevisível" },
+      { "nome": "Poção do Tempo", "descricao": "Mistura gelada com hortelã e toque de limão" },
+      { "nome": "Poção da Fortuna", "descricao": "Drink dourado com glitter comestível e aroma cítrico" },
+      { "nome": "Poção do Guardião", "descricao": "Mistura escura com especiarias e toque defumado" },
+      { "nome": "Poção do Portal", "descricao": "Drink azul com espuma mágica e aroma de mistério" }
+    ]
+  }
+}
