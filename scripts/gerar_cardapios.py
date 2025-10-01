@@ -60,7 +60,6 @@ def gerar_cardapio_comida(arquivo_json, saida_html):
             "comidas": "🍽️",
             "bebidas": "🍹",
             "sobremesas": "🍰",
-            "poções_especiais": "🧙‍♂️"
         }.get(categoria, "✨")
 
         blocos += f"<h2>{emoji} {categoria.replace('_', ' ').title()}</h2><div class='cards-grid'>"
