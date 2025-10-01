@@ -1,0 +1,47 @@
+{
+  "cardapio": {
+    "comidas": [
+      { 
+        "nome": "Pizza da Constelação", 
+        "descricao": "Pizza artesanal com ingredientes cósmicos e borda lunar",
+        "imagem": "/assets/images/comidas/pizza-constelacao.jpg"
+      },
+      { 
+        "nome": "Hambúrguer do Herói", 
+        "descricao": "Hambúrguer suculento com queijo encantado e molho de bravura",
+        "imagem": "/assets/images/comidas/hamburguer-heroi.jpg"
+      },
+      { 
+        "nome": "Batatas do Eclipse", 
+        "descricao": "Batatas rústicas com tempero sombrio e toque de alho estelar",
+        "imagem": "/assets/images/comidas/batatas-eclipse.jpg"
+      }
+    ],
+    "bebidas": [
+      { 
+        "nome": "Cerveja do Dragão", 
+        "descricao": "Cerveja encorpada com espuma flamejante",
+        "imagem": "/assets/images/bebidas/cerveja-dragao.jpg"
+      },
+      { 
+        "nome": "Hidromel Encantado", 
+        "descricao": "Hidromel artesanal com mel e especiarias mágicas",
+        "imagem": "/assets/images/bebidas/hidromel.jpg"
+      }
+    ],
+    "sobremesas": [
+      { 
+        "nome": "Doce da Lua Cheia", 
+        "descricao": "Cheesecake com calda de frutas vermelhas e brilho lunar",
+        "imagem": "/assets/images/sobremesas/doce-lua.jpg"
+      }
+    ],
+    "poções_especiais": [
+      { 
+        "nome": "Poção da Coragem", 
+        "descricao": "Mistura cítrica com toque de gengibre e energia solar",
+        "imagem": "/assets/images/pocoes/pocao-coragem.jpg"
+      }
+    ]
+  }
+}
