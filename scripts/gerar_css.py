@@ -1,4 +1,7 @@
-*{
+import os
+
+# Conteúdo padrão do CSS
+DEFAULT_STYLE_CSS = """*{
     margin: 0px;
     padding: 0px;
 }
@@ -119,7 +122,7 @@ img { max-width: 100%; height: auto; display: block; }
 
 .slider {
   width: 100%;
-  max-width: 100vw; /* evita ultrapassar a viewport */
+  max-width: 100vw;
   height: 640px;
   position: relative;
   overflow: hidden;
@@ -175,52 +178,34 @@ img { max-width: 100%; height: auto; display: block; }
   border: 2px solid #fff;
   padding: 5px;
   border-radius: 50%;
-  cursor: pointer;
   background: #333;
 }
 
 .manual-btn:hover { background: var(--color-accent); border-color: var(--color-accent); }
 
-.bem-vindos {
+ .bem-vindos {
     background: url('../assets/images/fundo-estrelado.png') no-repeat center center;
   background-size: cover;
   position: relative;
   background-color: var(--color-surface);
   color: var(--color-text);
   padding: 72px 0;
-  z-index: 1;
-}
-.bem-vindos::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: #2a2b4a9a;
- /* background: #13142fd9; /* camada escura sobre o fundo estrelado */
-  z-index: -1;
-}
-
-.bem-vindos h2, .bem-vindos h3 {
-  font-family: 'Cinzel', serif;
-  color: var(--color-accent);
-  margin-bottom: 16px;
-}
-
-.bem-vindos .container {
-  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
 }
 
 .bem-vindos p { color: var(--color-muted); }
 
 
-.section#historia {
+ .section#historia {
   background: url('../assets/images/fundo-estrelado.png') no-repeat center center;
   background-size: cover;
   position: relative;
   padding: 96px 20px;
   color: var(--color-text);
   text-align: center;
-  z-index: 1;
 }
 
 .section#historia::before {
@@ -389,3 +374,18 @@ footer {
     align-items: center;
   }
 }
+"""
+
+def ensure_style_css(css_path: str, css_content: str | None = None) -> None:
+    """Garante que o arquivo CSS exista. Cria apenas se estiver ausente.
+
+    Args:
+        css_path: Caminho completo para o style.css de saída.
+        css_content: Conteúdo para escrever (opcional). Se None, usa DEFAULT_STYLE_CSS.
+    """
+    if os.path.exists(css_path):
+        return
+    os.makedirs(os.path.dirname(css_path), exist_ok=True)
+    with open(css_path, "w", encoding="utf-8") as f:
+        f.write(css_content or DEFAULT_STYLE_CSS)
+    print(f"🧩 CSS criado em {css_path}")

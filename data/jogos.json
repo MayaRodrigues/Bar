@@ -4,60 +4,89 @@
       { 
         "nome": "Dungeons & Dragons",
         "tipo": "RPG de fantasia",
+        "descricao": "Aventure-se por masmorras, enfrente criaturas épicas e crie histórias inesquecíveis com seu grupo.",
         "imagem": "/assets/images/jogos/tabuleiro/dnd.jpg"
      },
       { 
         "nome": "Call of Cthulhu", 
         "tipo": "RPG de horror investigativo",
+        "descricao": "Investigue mistérios sombrios e enfrente horrores cósmicos enquanto preserva a sua sanidade.",
         "imagem": "/assets/images/jogos/tabuleiro/med.jpg"
       },
       { 
         "nome": "Vampire: The Masquerade",
         "tipo": "RPG de horror gótico",
+        "descricao": "Trame intrigas nas sombras, equilibre humanidade e sede de sangue em uma sociedade secreta de vampiros.",
         "imagem": "/assets/images/jogos/tabuleiro/vamp.jpg"
       },
       { 
         "nome": "Werewolf: The Apocalypse",
         "tipo": "RPG sobrenatural",
+        "descricao": "Liberte a fúria Garou para combater a corrupção espiritual e proteger a Mãe Terra.",
         "imagem": "/assets/images/jogos/tabuleiro/transferir.jpg"
       },
       {
         "nome": "Starfinder", 
         "tipo": "RPG de ficção científica",
+        "descricao": "Explore galáxias, encontre raças alienígenas e misture tecnologia com magia nas estrelas.",
         "imagem": "/assets/images/jogos/tabuleiro/star.jpg"
        },
       { 
         "nome": "Tormenta 20", 
         "tipo": "RPG brasileiro de fantasia",
+        "descricao": "Torne-se herói em Arton, enfrente deuses e monstros em aventuras épicas de alta fantasia.",
         "imagem": "/assets/images/jogos/tabuleiro/tormenta.jpg"
        },
       { 
         "nome": "Chess", 
-        "tipo": "Xadrez clássico"
+        "tipo": "Xadrez clássico",
+        "descricao": "Batalha estratégica por turnos em que cada peça e cada lance podem decidir o jogo.",
+        "imagem": "/assets/images/jogos/tabuleiro/chess.jpg"
       },
       { 
         "nome": "Uno", 
-        "tipo": "Jogo de cartas casual" },
+        "tipo": "Jogo de cartas casual",
+        "descricao": "Rápido e divertido: descarte suas cartas, use efeitos e surpreenda seus amigos.",
+        "imagem": "/assets/images/jogos/tabuleiro/uno.jpg"
+      },
       { 
         "nome": "Yu-Gi-Oh!", 
-        "tipo": "Jogo de cartas colecionáveis" }
+        "tipo": "Jogo de cartas colecionáveis",
+        "descricao": "Convoque monstros lendários e use armadilhas para vencer duelos cheios de tática.",
+        "imagem": "/assets/images/jogos/tabuleiro/yu_gi_oh.jpg"
+      }
     ],
     "maquinas": [
       { 
         "nome": "Street Fighter II", 
-        "tipo": "Luta clássica arcade" },
+        "tipo": "Luta clássica arcade",
+        "descricao": "Enfrente adversários icônicos em duelos 1v1 com golpes especiais memoráveis.",
+        "imagem": "/assets/images/jogos/maquinas/street_fighter.jpg"
+       },
       { 
         "nome": "Mortal Kombat", 
-        "tipo": "Luta com fatalidades" },
+        "tipo": "Luta com fatalidades",
+        "descricao": "Combates intensos e brutais com finalizações lendárias e atmosfera sombria.",
+        "imagem": "/assets/images/jogos/maquinas/mortal_kombat.jpg"
+       },
       { 
         "nome": "Donkey Kong", 
-        "tipo": "Plataforma retrô" },
+        "tipo": "Plataforma retrô",
+        "descricao": "Desvie de barris, escale estruturas e salve a donzela neste clássico dos arcades.",
+        "imagem": "/assets/images/jogos/maquinas/donkey_kong.jpg"
+       },
       { 
         "nome": "Super Mario", 
-        "tipo": "Plataforma clássico" },
+        "tipo": "Plataforma clássico",
+        "descricao": "Aventura colorida com fases criativas, power-ups e o resgate da Princesa Peach.",
+        "imagem": "/assets/images/jogos/maquinas/super_mario.jpg"
+       },
       { 
         "nome": "Pac-Man", 
-        "tipo": "Pac-man clássico" }
+        "tipo": "Pac-man clássico",
+        "descricao": "Coma as bolinhas, fuja dos fantasmas e busque a maior pontuação do labirinto.",
+        "imagem": "/assets/images/jogos/maquinas/pac_man.jpg"
+       }
     ]
   }
 }

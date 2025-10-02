@@ -7,13 +7,13 @@ O objetivo é criar um **site de um bar de jogos de tabuleiro** utilizando **HTM
 
 ## 📋 Descrição do Projeto
 
-Este projeto contém um sistema automatizado para gerar páginas HTML de cardápios a partir de arquivos JSON. O script Python `gerar_cardapios.py` lê dados estruturados em formato JSON e gera automaticamente páginas HTML completas com estilo CSS.
+Este projeto contém um sistema automatizado para gerar páginas HTML de cardápios a partir de arquivos JSON. O script principal é `scripts/site.py`, que utiliza `scripts/gerar_html.py` e `scripts/gerar_css.py` para gerar páginas HTML completas com estilo CSS.
 
 ## ⚙️ Tecnologias Utilizadas  
 - **HTML5** → Estrutura do site  
 - **CSS3** → Estilização das páginas  
 - **Python 3** → Script para gerar os cardápios automaticamente  
-- **Arquivos de dados** → Formato `.csv` ou `.json` para armazenar alimentos, bebidas e jogos  
+- **Arquivos de dados** → Formato `.json` para armazenar alimentos, bebidas e jogos  
 
 ## 🎯 Requisitos Atendidos
 
@@ -28,18 +28,20 @@ Este projeto contém um sistema automatizado para gerar páginas HTML de cardáp
 ```
 Bar/
 ├── data/
-│   ├── comidas.json    # Dados de comidas, bebidas, sobremesas e poções
-│   └── jogos.json      # Dados de jogos de tabuleiro e máquinas arcade
+│   ├── comidas.json              # Dados de comidas, bebidas e sobremesas
+│   └── jogos.json                # Dados de jogos de tabuleiro e máquinas arcade
+├── assets/                       # Imagens e vídeos do site
+│   ├── images/
+│   └── videos/
 ├── scripts/
-│   └── gerar_cardapios.py  # Script Python para gerar os cardápios
-├── assests/  #imagens e videos utilizados no site
-|      ├── imagens       
-│      ├── videos
+│   ├── gerar_css.py              # CSS padrão embutido (usado quando site/style.css não existe)
+│   ├── gerar_html.py             # Geração de HTML a partir dos JSONs
+│   └── site.py                   # Script principal (modo interativo e linha de comando)
 ├── site/
-│   ├── index.html      # Página inicial
-│   ├── style.css       # Estilos do site
-│   ├── cardapio_comida.html   # Gerado automaticamente
-│   └── cardapio_jogos.html    # Gerado automaticamente
+│   ├── index.html                # Página inicial
+│   ├── style.css                 # Estilos do site
+│   ├── cardapio_comida.html      # Gerado automaticamente
+│   └── cardapio_jogos.html       # Gerado automaticamente
 └── README.md
 ```
 
@@ -47,11 +49,11 @@ Bar/
 
 ### **Opção 1: Modo Interativo (Recomendado)**
 
-Execute o script sem argumentos para entrar no modo interativo:
+Execute o script principal sem argumentos para entrar no modo interativo:
 
 ```bash
 cd scripts
-python gerar_cardapios.py
+python site.py
 ```
 
 O script apresentará um menu com opções:
@@ -161,9 +163,9 @@ python gerar_cardapios.py "C:\Users\...\Bar\data\jogos.json"
 ```
 
 **📸 Nota sobre Imagens:**
-- O campo `"imagem"` é **opcional** - itens sem imagem funcionam normalmente
-- Veja o arquivo `COMO_ADICIONAR_IMAGENS.md` para instruções detalhadas
-- Exemplo completo em `data/exemplo_com_imagens.json`
+- O campo `"imagem"` é opcional — itens sem imagem funcionam normalmente.
+- Caminhos aceitos para imagens nos JSONs: `../assets/...`, `/assets/...` ou `assets/...`.
+  - Os caminhos iniciando com `/assets/...` ou `assets/...` são normalizados automaticamente para `../assets/...` nas páginas dentro de `site/`.
 
 ## 🔄 Atualizando os Cardápios
 
@@ -201,7 +203,7 @@ python gerar_cardapios.py "C:\Users\...\Bar\data\jogos.json"
 
 Após salvar, execute:
 ```bash
-python gerar_cardapios.py
+python site.py
 > Digite: comidas.json
 ```
 
@@ -209,7 +211,7 @@ python gerar_cardapios.py
 
 ✅ Página inicial com apresentação do bar (fotos e vídeos).
 ✅ Cardápio de alimentos e bebidas gerado automaticamente.
-✅ Lista de jogos de tabuleiro com descrição e número de jogadores.
+✅ Lista de jogos de tabuleiro com descrição.
 ✅ Estilo responsivo com CSS.
 ✅ Possibilidade de atualizar os arquivos de entrada e regenerar o site.
 
@@ -269,9 +271,9 @@ Para adicionar novas categorias:
 ## 📞 Suporte
 
 Se encontrar problemas:
-1. Verifique se os arquivos JSON estão no formato correto
-2. Certifique-se de estar no diretório `scripts` ao executar
-3. Verifique as mensagens de erro - elas são descritivas e ajudam a identificar o problema
+1. Verifique se os arquivos JSON estão no formato correto.
+2. Certifique-se de estar no diretório `scripts` ao executar.
+3. Verifique as mensagens de erro — elas são descritivas e ajudam a identificar o problema.
 
 ---
 
