@@ -1,9 +1,27 @@
 # 🍺 Luna & Hops Tavern - Sistema de Geração de Cardápios
 
+> **🆕 NOVA VERSÃO DJANGO DISPONÍVEL!**  
+> Este projeto agora possui uma versão completa em Django com geração dinâmica de páginas e sistema de gerenciamento via Django Admin.  
+> **📖 Veja [DJANGO_SETUP.md](DJANGO_SETUP.md) para instruções da nova versão.**
+
 ## 📖 Sobre o Projeto  
 Este projeto foi desenvolvido como parte da disciplina **Projeto e Desenvolvimento de Sistemas Web (CC6PDSW)**, no curso de **Ciência da Computação – UTFPR**.  
 
-O objetivo é criar um **site de um bar de jogos de tabuleiro** utilizando **HTML, CSS e Python**, onde parte do conteúdo (cardápio de alimentos/bebidas e jogos) é gerado automaticamente a partir de arquivos de entrada.  
+O objetivo é criar um **site de um bar de jogos de tabuleiro** utilizando **HTML, CSS e Python**, onde parte do conteúdo (cardápio de alimentos/bebidas e jogos) é gerado automaticamente a partir de arquivos de entrada.
+
+## 🔄 Versões do Projeto
+
+### **Versão 1: Geração Estática (Avaliação Anterior)**
+- Páginas HTML geradas por scripts Python
+- Dados em arquivos JSON
+- Documentação neste arquivo
+
+### **Versão 2: Django Framework (Nova Avaliação)** ⭐
+- Páginas geradas dinamicamente pelo Django
+- Banco de dados com modelos Django
+- Django Admin para CRUD completo
+- Rastreamento de disponibilidade de jogos
+- **📖 [Ver documentação completa](DJANGO_SETUP.md)**  
 
 ## 📋 Descrição do Projeto
 

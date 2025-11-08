@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cardápio - Luna & Hops Tavern</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <img src="{% static 'assets/images/logo.png' %}" alt="Logo do Bar de Jogos">
+        <h1 class="titulo">Luna & Hops Tavern</h1>
+      </div>
+      <ul class="nav-links">
+        <li><a href="{% url 'cardapio:home' %}">Início</a></li>
+        <li><a href="{% url 'cardapio:cardapio_comida' %}" class="active">Cardápio</a></li>
+        <li><a href="{% url 'cardapio:cardapio_jogos' %}">Jogos</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <main>
+    <section class="bem-vindos">
+      <div class="container">
+        <h1>🍽️ Cardápio Mágico</h1>
+        
+        {% for categoria in categorias %}
+        <h2>{{ categoria.icone }} {{ categoria.nome }}</h2>
+        <div class='cards-grid'>
+          {% for item in categoria.itens_cardapio.all %}
+          <div class="card">
+            {% if item.imagem %}
+              <img src="{{ item.imagem.url }}" alt="{{ item.nome }}" class="card-image">
+            {% else %}
+              <img src="{% static 'assets/images/placeholder.png' %}" alt="{{ item.nome }}" class="card-image">
+            {% endif %}
+            <div class="card-content">
+              <h3>{{ item.nome }}</h3>
+              <p>{{ item.descricao }}</p>
+            </div>
+          </div>
+          {% empty %}
+          <p>Nenhum item disponível nesta categoria.</p>
+          {% endfor %}
+        </div>
+        {% endfor %}
+        
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Luna & Hops Tavern. | Todos os direitos reservados.</p>
+  </footer>
+</body>
+</html>
