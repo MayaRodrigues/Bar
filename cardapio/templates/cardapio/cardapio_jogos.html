@@ -12,10 +12,10 @@
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <style>
     .disponibilidade {
-      margin-top: 10px;
       padding: 8px;
       border-radius: 5px;
       background: rgba(255, 255, 255, 0.05);
+      display: block;
     }
     .disponivel {
       color: #4ade80;
@@ -51,7 +51,7 @@
         <h2>🎲 Tabuleiro</h2>
         <div class='cards-grid'>
           {% for jogo in jogos_tabuleiro %}
-          <div class="card">
+          <div class="card card--jogo">
             {% if jogo.imagem %}
               <img src="{{ jogo.imagem.url }}" alt="{{ jogo.nome }}" class="card-image">
             {% else %}
@@ -77,7 +77,7 @@
         <h2>🕹️ Máquinas</h2>
         <div class='cards-grid'>
           {% for jogo in jogos_maquinas %}
-          <div class="card">
+          <div class="card card--jogo">
             {% if jogo.imagem %}
               <img src="{{ jogo.imagem.url }}" alt="{{ jogo.nome }}" class="card-image">
             {% else %}

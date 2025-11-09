@@ -295,9 +295,12 @@ footer {
   flex-direction: column;   /* imagem em cima, conteúdo embaixo */
   width: 100%;              /* ocupa a coluna do grid */
   max-width: 320px;         /* limita largura máxima por card */
-  height: 420px;            /* padroniza a altura dos cards */
+  height: 350px;            /* padroniza a altura dos cards */
   text-align: center;
 }
+
+/* Jogos podem precisar de mais espaço por conta da disponibilidade */
+.card--jogo { height: 460px; }
 
 
 .card:hover {
@@ -317,10 +320,30 @@ footer {
 .card-content {
   padding: 16px 20px;
   flex: 1;                   /* ocupa o restante do card para igualar alturas */
-  display: flex;
+  display: flex;             /* coluna flexível */
   flex-direction: column;
   gap: 8px;
-  align-items: center;
+  align-items: stretch;      /* evita sobreposição e garante largura completa */
+  text-align: center;
+  min-height: 0;
+}
+
+/* Descrição cresce e ocupa o espaço disponível, sem invadir a disponibilidade */
+.card-content p:nth-of-type(2):not(.disponibilidade) {
+  flex: 1 1 auto;            /* empurra a disponibilidade para o rodapé */
+  display: block;            /* layout previsível em todos navegadores */
+  overflow: hidden;          /* evita que transborde por cima da disponibilidade */
+  line-clamp: 4;             /* sugestão para linter / suporte parcial */
+  line-height: 1.5;          /* usado no cálculo do max-height */
+  max-height: calc(1.5em * 4); /* fallback ao clamp: limita fisicamente a altura */
+  margin-bottom: 6px;        /* pequeno respiro antes da disponibilidade */
+  word-wrap: break-word;
+  overflow-wrap: anywhere;   /* evita palavras longas empurrarem layout */
+}
+
+/* Disponibilidade fixa no final do card */
+.card-content .disponibilidade {
+  margin-top: auto;          /* fixa no rodapé do card dentro do flex column */
 }
 
 .card h3 {
