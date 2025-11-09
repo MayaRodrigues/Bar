@@ -18,7 +18,7 @@ def cardapio_comida_view(request):
     """
     # Busca todas as categorias de cardápio (comidas, bebidas, sobremesas)
     categorias_cardapio = Categoria.objects.filter(
-        slug__in=['comidas', 'bebidas', 'sobremesas', 'pocoes-especiais']
+        slug__in=['comidas', 'bebidas', 'sobremesas']
     ).prefetch_related('itens_cardapio')
     
     # Organiza os itens por categoria

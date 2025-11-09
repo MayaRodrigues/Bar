@@ -78,7 +78,6 @@ class Command(BaseCommand):
             'comidas': Categoria.objects.create(nome='Comidas', slug='comidas', icone='🍽️'),
             'bebidas': Categoria.objects.create(nome='Bebidas', slug='bebidas', icone='🍹'),
             'sobremesas': Categoria.objects.create(nome='Sobremesas', slug='sobremesas', icone='🍰'),
-            'pocoes-especiais': Categoria.objects.create(nome='Poções Especiais', slug='pocoes-especiais', icone='🧪'),
             'tabuleiro': Categoria.objects.create(nome='Tabuleiro', slug='tabuleiro', icone='🎲'),
             'maquinas': Categoria.objects.create(nome='Máquinas', slug='maquinas', icone='🕹️'),
         }
