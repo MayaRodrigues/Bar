@@ -182,7 +182,7 @@ img { max-width: 100%; height: auto; display: block; }
 .manual-btn:hover { background: var(--color-accent); border-color: var(--color-accent); }
 
 .bem-vindos {
-    background: url('../assets/images/fundo-estrelado.png') no-repeat center center;
+    background: url('../images/fundo-estrelado.png') no-repeat center center;
   background-size: cover;
   position: relative;
   background-color: var(--color-surface);
@@ -214,7 +214,7 @@ img { max-width: 100%; height: auto; display: block; }
 
 
 .section#historia {
-  background: url('../assets/images/fundo-estrelado.png') no-repeat center center;
+  background: url('../images/fundo-estrelado.png') no-repeat center center;
   background-size: cover;
   position: relative;
   padding: 96px 20px;

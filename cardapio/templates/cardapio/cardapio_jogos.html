@@ -30,7 +30,7 @@
   <header>
     <nav class="navbar">
       <div class="logo">
-        <img src="{% static 'assets/images/logo.png' %}" alt="Logo do Bar de Jogos">
+        <img src="{% static 'images/logo.png' %}" alt="Logo do Bar de Jogos">
         <h1 class="titulo">Luna & Hops Tavern</h1>
       </div>
       <ul class="nav-links">
@@ -54,7 +54,7 @@
             {% if jogo.imagem %}
               <img src="{{ jogo.imagem.url }}" alt="{{ jogo.nome }}" class="card-image">
             {% else %}
-              <img src="{% static 'assets/images/placeholder.png' %}" alt="{{ jogo.nome }}" class="card-image">
+              <img src="{% static 'images/logo.png' %}" alt="{{ jogo.nome }}" class="card-image">
             {% endif %}
             <div class="card-content">
               <h3>{{ jogo.nome }}</h3>
@@ -80,7 +80,7 @@
             {% if jogo.imagem %}
               <img src="{{ jogo.imagem.url }}" alt="{{ jogo.nome }}" class="card-image">
             {% else %}
-              <img src="{% static 'assets/images/placeholder.png' %}" alt="{{ jogo.nome }}" class="card-image">
+              <img src="{% static 'images/logo.png' %}" alt="{{ jogo.nome }}" class="card-image">
             {% endif %}
             <div class="card-content">
               <h3>{{ jogo.nome }}</h3>

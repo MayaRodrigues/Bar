@@ -4,6 +4,7 @@ from django.core.management.base import BaseCommand
 from django.core.files import File
 from cardapio.models import Categoria, ItemCardapio, Jogo, CopiaJogo
 from pathlib import Path
+import shutil
 
 
 class Command(BaseCommand):
@@ -19,6 +20,54 @@ class Command(BaseCommand):
         ItemCardapio.objects.all().delete()
         Categoria.objects.all().delete()
         
+        # Caminhos base
+        project_root = Path(__file__).resolve().parent.parent.parent.parent
+        static_root = project_root / 'cardapio' / 'static'
+        data_images_root = project_root / 'data' / 'images'
+
+        def image_path_from_json(json_path: str) -> Path:
+            """
+            Converte '/assets/images/..' do JSON para caminho real, priorizando 'data/images/...'
+            e fazendo fallback para 'cardapio/static/images/...'.
+            """
+            # Normaliza e remove prefixo '/'
+            rel = json_path.lstrip('/')
+            # Substitui 'assets/' por '' porque as imagens estão em 'static/images/...'
+            if rel.startswith('assets/'):
+                rel = rel.replace('assets/', '', 1)
+            # Primeiro tenta em data/images
+            candidate_data = data_images_root / rel
+            if candidate_data.exists():
+                return candidate_data
+            # Fallback para static
+            return static_root / rel
+
+        def safe_attach_image(instance, field_name: str, json_path: str):
+            if not json_path:
+                return
+            # Caminho relativo esperado (ex.: images/xxx.png)
+            rel = json_path.lstrip('/')
+            if rel.startswith('assets/'):
+                rel = rel.replace('assets/', '', 1)
+            source_static = static_root / rel
+            target_data = data_images_root / rel
+
+            # Se existir no static e não no data, copia para organizar na pasta data/images
+            try:
+                if source_static.exists() and not target_data.exists():
+                    target_data.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(source_static, target_data)
+            except Exception:
+                # Se falhar a cópia, seguimos com fallback
+                pass
+
+            img_path = image_path_from_json(json_path)
+            if img_path.exists():
+                with open(img_path, 'rb') as fh:
+                    getattr(instance, field_name).save(img_path.name, File(fh), save=False)
+            else:
+                self.stdout.write(self.style.WARNING(f"Imagem não encontrada: {json_path} -> {img_path}"))
+
         # Cria categorias
         self.stdout.write('Criando categorias...')
         categorias = {
@@ -32,8 +81,7 @@ class Command(BaseCommand):
         
         # Popula cardápio de comidas
         self.stdout.write('Populando cardápio de comidas...')
-        base_dir = Path(__file__).resolve().parent.parent.parent.parent
-        comidas_json = base_dir / 'data' / 'comidas.json'
+        comidas_json = project_root / 'data' / 'comidas.json'
         
         if comidas_json.exists():
             with open(comidas_json, 'r', encoding='utf-8') as f:
@@ -43,37 +91,40 @@ class Command(BaseCommand):
             
             # Processa comidas
             for item in cardapio.get('comidas', []):
-                ItemCardapio.objects.create(
+                ic = ItemCardapio(
                     nome=item['nome'],
                     descricao=item['descricao'],
                     categoria=categorias['comidas'],
-                    imagem=''  # Imagens serão adicionadas manualmente via admin
                 )
+                safe_attach_image(ic, 'imagem', item.get('imagem', ''))
+                ic.save()
                 self.stdout.write(f'  - Criado: {item["nome"]}')
             
             # Processa bebidas
             for item in cardapio.get('bebidas', []):
-                ItemCardapio.objects.create(
+                ic = ItemCardapio(
                     nome=item['nome'],
                     descricao=item['descricao'],
                     categoria=categorias['bebidas'],
-                    imagem=''
                 )
+                safe_attach_image(ic, 'imagem', item.get('imagem', ''))
+                ic.save()
                 self.stdout.write(f'  - Criado: {item["nome"]}')
             
             # Processa sobremesas
             for item in cardapio.get('sobremesas', []):
-                ItemCardapio.objects.create(
+                ic = ItemCardapio(
                     nome=item['nome'],
                     descricao=item['descricao'],
                     categoria=categorias['sobremesas'],
-                    imagem=''
                 )
+                safe_attach_image(ic, 'imagem', item.get('imagem', ''))
+                ic.save()
                 self.stdout.write(f'  - Criado: {item["nome"]}')
         
         # Popula jogos
         self.stdout.write('Populando jogos...')
-        jogos_json = base_dir / 'data' / 'jogos.json'
+        jogos_json = project_root / 'data' / 'jogos.json'
         
         if jogos_json.exists():
             with open(jogos_json, 'r', encoding='utf-8') as f:
@@ -83,13 +134,14 @@ class Command(BaseCommand):
             
             # Processa jogos de tabuleiro
             for item in jogos_data.get('tabuleiro', []):
-                jogo = Jogo.objects.create(
+                jogo = Jogo(
                     nome=item['nome'],
                     tipo=item['tipo'],
                     descricao=item.get('descricao', ''),
                     categoria=categorias['tabuleiro'],
-                    imagem=''
                 )
+                safe_attach_image(jogo, 'imagem', item.get('imagem', ''))
+                jogo.save()
                 self.stdout.write(f'  - Criado: {item["nome"]}')
                 
                 # Cria 2 cópias de exemplo para cada jogo
@@ -104,13 +156,14 @@ class Command(BaseCommand):
             
             # Processa máquinas arcade
             for item in jogos_data.get('maquinas', []):
-                jogo = Jogo.objects.create(
+                jogo = Jogo(
                     nome=item['nome'],
                     tipo=item['tipo'],
                     descricao=item.get('descricao', ''),
                     categoria=categorias['maquinas'],
-                    imagem=''
                 )
+                safe_attach_image(jogo, 'imagem', item.get('imagem', ''))
+                jogo.save()
                 self.stdout.write(f'  - Criado: {item["nome"]}')
                 
                 # Cria 1 cópia para cada máquina (geralmente só há uma)
@@ -122,6 +175,4 @@ class Command(BaseCommand):
                 )
                 self.stdout.write(f'    - Cópia criada: {jogo.nome[:3].upper()}-001')
         
-        self.stdout.write(self.style.SUCCESS('\n✅ Banco de dados populado com sucesso!'))
-        self.stdout.write(self.style.WARNING('\n⚠️  IMPORTANTE: As imagens devem ser adicionadas manualmente via Django Admin.'))
-        self.stdout.write(self.style.WARNING('   Acesse /admin/ e faça upload das imagens para cada item.'))
+        self.stdout.write(self.style.SUCCESS('\n✅ Banco de dados populado com sucesso (com imagens)!'))

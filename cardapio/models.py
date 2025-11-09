@@ -1,4 +1,5 @@
 from django.db import models
+from db_file_storage.model_utils import delete_file, delete_file_if_needed
 
 
 # --- MODELO 1: CATEGORIA (Chave para agrupar Cardápio e Jogos) ---
@@ -19,6 +20,12 @@ class Categoria(models.Model):
     def __str__(self):
         return self.nome
 
+# --- FILE MODEL: Imagem de Item de Cardápio (armazenada no banco) ---
+class ItemCardapioImage(models.Model):
+    bytes = models.TextField()
+    filename = models.CharField(max_length=255)
+    mimetype = models.CharField(max_length=50)
+
 # --- MODELO 2: ITEM CARDÁPIO (Comidas, Bebidas, Sobremesas) ---
 class ItemCardapio(models.Model):
     """
@@ -26,8 +33,12 @@ class ItemCardapio(models.Model):
     """
     nome = models.CharField(max_length=200, unique=True)
     descricao = models.TextField()
-    # Usa ImageField para upload de imagens. Requer a instalação de 'Pillow' (pip install Pillow)
-    imagem = models.ImageField(upload_to='cardapio_imagens/') 
+    # Usa ImageField com armazenamento no banco via django-db-file-storage
+    imagem = models.ImageField(
+        upload_to='cardapio.ItemCardapioImage/bytes/filename/mimetype',
+        blank=True,
+        null=True,
+    ) 
     
     # RELACIONAMENTO (Um-para-Muitos): Um item pertence a uma Categoria
     categoria = models.ForeignKey(
@@ -45,6 +56,16 @@ class ItemCardapio(models.Model):
     def __str__(self):
         return f"{self.nome} ({self.categoria.nome})"
 
+    def save(self, *args, **kwargs):
+        # Remove arquivo antigo (se alterado) antes de salvar
+        delete_file_if_needed(self, 'imagem')
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        # Apaga o registro e depois remove o arquivo associado
+        super().delete(*args, **kwargs)
+        delete_file(self, 'imagem')
+
 # --- MODELO 3: JOGO (Item base para rastreamento) ---
 class Jogo(models.Model):
     """
@@ -53,7 +74,13 @@ class Jogo(models.Model):
     nome = models.CharField(max_length=200, unique=True)
     tipo = models.CharField(max_length=100) # Ex: RPG de fantasia, Luta clássica arcade
     descricao = models.TextField()
-    imagem = models.ImageField(upload_to='jogos_imagens/')
+    # --- FILE MODEL: Imagem de Jogo (armazenada no banco) ---
+    # Declarado abaixo para manter ordem do arquivo legível
+    imagem = models.ImageField(
+        upload_to='cardapio.JogoImage/bytes/filename/mimetype',
+        blank=True,
+        null=True,
+    )
 
     # RELACIONAMENTO (Um-para-Muitos): Um jogo pertence a uma Categoria
     categoria = models.ForeignKey(
@@ -73,6 +100,20 @@ class Jogo(models.Model):
     # Método de conveniência para ser usado nas views
     def copias_disponiveis(self):
         return self.copias.filter(disponivel=True).count()
+
+    def save(self, *args, **kwargs):
+        delete_file_if_needed(self, 'imagem')
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        super().delete(*args, **kwargs)
+        delete_file(self, 'imagem')
+
+# --- FILE MODEL: Imagem de Jogo (armazenada no banco) ---
+class JogoImage(models.Model):
+    bytes = models.TextField()
+    filename = models.CharField(max_length=255)
+    mimetype = models.CharField(max_length=50)
 
 # --- MODELO 4: COPIA JOGO (Inventário e Rastreamento de Disponibilidade) ---
 class CopiaJogo(models.Model):

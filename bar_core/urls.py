@@ -18,10 +18,14 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from cardapio import views_db_files
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('cardapio.urls')),
+    # Compat: serve files stored in DB without relying on package's old URLs
+    path('files/get/', views_db_files.get_file, kwargs={"add_attachment_headers": False}, name='db_file_storage.get_file'),
+    path('files/download/', views_db_files.get_file, kwargs={"add_attachment_headers": True}, name='db_file_storage.download_file'),
 ]
 
 # Serve media files in development

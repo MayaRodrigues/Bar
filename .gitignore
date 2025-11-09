@@ -1,0 +1,61 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.eggs/
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Django
+*.log
+*.pot
+*.pyc
+staticfiles/
+media/
+
+# SQLite database and related
+*.sqlite3
+*.sqlite3-journal
+
+# IDE/editor
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# OS / misc
+*.bak
+*.tmp
+~$*
+
+# Node/npm (if any)
+node_modules/
+
+# Coverage / testing
+htmlcov/
+.coverage
+.coverage.*
+.pytest_cache/
+
+# Build artifacts
+/dist/
+/build/
+
+# Local settings / secrets
+.env
+.env.*
+*.local
+local_settings.py
+
+# Cache
+.cache/
