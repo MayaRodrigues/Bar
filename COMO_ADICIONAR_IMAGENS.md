@@ -1,236 +1,52 @@
-# 📸 Como Adicionar Imagens aos Cardápios
+# Como Adicionar Imagens aos Cardápios (Versão Django)
 
-## 🎯 Visão Geral
+## Visão Geral
 
-Os cards dos cardápios agora suportam imagens! Você pode adicionar fotos de cada comida, bebida, sobremesa ou jogo para tornar o site mais atrativo.
+As imagens dos modelos (`ItemCardapio` e `Jogo`) são **armazenadas no banco de dados** usando `django-db-file-storage`. Você pode adicioná-las pelo **Django Admin** ou automaticamente a partir do **catálogo pronto** (`catalogo_pronto/`).
 
-## 📁 Estrutura de Diretórios para Imagens
+## Opções de Adição de Imagens
 
-Organize suas imagens na pasta `assets/images/`:
+### 1) Via Django Admin (recomendado para alterações manuais)
+- Acesse: http://127.0.0.1:8000/admin/
+- Edite um `ItemCardapio` ou `Jogo`.
+- No campo `imagem`, clique em "Choose File" e envie.
+- Salve.
+- Ao substituir/limpar a imagem e salvar, o arquivo antigo é removido do banco automaticamente.
 
-```
-Bar/
-├── assets/
-│   ├── images/
-│   │   ├── comidas/
-│   │   │   ├── pizza-constelacao.jpg
-│   │   │   ├── hamburguer-heroi.jpg
-│   │   │   └── ...
-│   │   ├── bebidas/
-│   │   │   ├── cerveja-dragao.jpg
-│   │   │   ├── hidromel.jpg
-│   │   │   └── ...
-│   │   ├── sobremesas/
-│   │   │   ├── doce-lua.jpg
-│   │   │   └── ...
-│   │   ├── pocoes/
-│   │   │   └── pocao-coragem.jpg
-│   │   └── jogos/
-│   │       ├── tabuleiro/
-│   │       │   ├── dnd.jpg
-│   │       │   └── ...
-│   │       └── maquinas/
-│   │           ├── street-fighter.jpg
-│   │           └── ...
-```
+### 2) Popular automaticamente com o catálogo pronto
+- Estrutura esperada:
+  ```
+  catalogo_pronto/
+  ├── comidas.json
+  ├── jogos.json
+  └── images/
+      ├── comidas/...
+      ├── bebidas/...
+      ├── sobremesas/...
+      └── jogos/
+          ├── tabuleiro/...
+          └── maquinas/...
+  ```
+- Os JSONs referenciam imagens com caminhos `/assets/images/...`.
+- O comando mapeia esses caminhos para `catalogo_pronto/images/...` (removendo o prefixo `images/` quando necessário) e anexa aos modelos.
+- Execute:
+  ```bash
+  python manage.py popular_banco
+  ```
 
-## 📝 Formato do JSON com Imagens
+## Como funciona por baixo dos panos
+- `DEFAULT_FILE_STORAGE = 'db_file_storage.storage.DatabaseFileStorage'`
+- `ItemCardapio.imagem` e `Jogo.imagem` usam `upload_to` específico (`cardapio.ItemCardapioImage/...` e `cardapio.JogoImage/...`).
+- Em `save()` e `delete()`, os hooks removem a imagem antiga do banco quando você substitui/limpa ou exclui o objeto.
+- As URLs públicas das imagens aparecem como `/files/get/?name=...` (camada de compatibilidade local).
 
-### **Para Comidas/Bebidas (comidas.json)**
+## Dicas e Boas Práticas
+- Formatos: JPG/PNG. Tamanho até ~500KB para bom desempenho.
+- Nomenclatura: evite espaços. Ex.: `Pizza_da_Constelacao.png`.
+- Para novos itens via JSON: adicione o caminho no JSON e a imagem correspondente em `catalogo_pronto/images/...`.
 
-```json
-{
-  "cardapio": {
-    "comidas": [
-      { 
-        "nome": "Pizza da Constelação", 
-        "descricao": "Pizza artesanal com ingredientes cósmicos e borda lunar",
-        "imagem": "/assets/images/comidas/pizza-constelacao.jpg"
-      },
-      { 
-        "nome": "Hambúrguer do Herói", 
-        "descricao": "Hambúrguer suculento com queijo encantado e molho de bravura",
-        "imagem": "/assets/images/comidas/hamburguer-heroi.jpg"
-      }
-    ],
-    "bebidas": [
-      { 
-        "nome": "Cerveja do Dragão", 
-        "descricao": "Cerveja encorpada com espuma flamejante",
-        "imagem": "/assets/images/bebidas/cerveja-dragao.jpg"
-      }
-    ],
-    "sobremesas": [
-      { 
-        "nome": "Doce da Lua Cheia", 
-        "descricao": "Cheesecake com calda de frutas vermelhas e brilho lunar",
-        "imagem": "/assets/images/sobremesas/doce-lua.jpg"
-      }
-    ],
-    "poções_especiais": [
-      { 
-        "nome": "Poção da Coragem", 
-        "descricao": "Mistura cítrica com toque de gengibre e energia solar",
-        "imagem": "/assets/images/pocoes/pocao-coragem.jpg"
-      }
-    ]
-  }
-}
-```
-
-### **Para Jogos (jogos.json)**
-
-```json
-{
-  "jogos": {
-    "tabuleiro": [
-      { 
-        "nome": "Dungeons & Dragons", 
-        "tipo": "RPG de fantasia",
-        "imagem": "/assets/images/jogos/tabuleiro/dnd.jpg"
-      },
-      { 
-        "nome": "Catan", 
-        "tipo": "Jogo de construção e comércio",
-        "imagem": "/assets/images/jogos/tabuleiro/catan.jpg"
-      }
-    ],
-    "maquinas": [
-      { 
-        "nome": "Street Fighter II", 
-        "tipo": "Luta clássica arcade",
-        "imagem": "/assets/images/jogos/maquinas/street-fighter.jpg"
-      }
-    ]
-  }
-}
-```
-
-## ✅ Passo a Passo para Adicionar Imagens
-
-### **1. Prepare as Imagens**
-- Formato recomendado: **JPG** ou **PNG**
-- Tamanho recomendado: **286x180px** (exato) ou proporção similar (16:10)
-- Peso: Máximo **500KB** por imagem (para carregamento rápido)
-- Nome do arquivo: Use nomes descritivos sem espaços (ex: `pizza-constelacao.jpg`)
-
-### **2. Organize as Imagens nas Pastas**
-Coloque cada imagem na pasta correspondente:
-- Comidas → `assets/images/comidas/`
-- Bebidas → `assets/images/bebidas/`
-- Sobremesas → `assets/images/sobremesas/`
-- Poções → `assets/images/pocoes/`
-- Jogos de Tabuleiro → `assets/images/jogos/tabuleiro/`
-- Máquinas Arcade → `assets/images/jogos/maquinas/`
-
-### **3. Adicione o Campo "imagem" no JSON**
-Edite o arquivo JSON correspondente e adicione o campo `"imagem"` com o caminho da imagem:
-
-```json
-{
-  "nome": "Nome do Item",
-  "descricao": "Descrição do item",
-  "imagem": "/assets/images/categoria/nome-arquivo.jpg"
-}
-```
-
-### **4. Execute o Script para Regenerar os Cardápios**
-```bash
-cd scripts
-python gerar_cardapios.py
-```
-
-Digite `todos` para regenerar todos os cardápios ou especifique o arquivo JSON.
-
-### **5. Verifique o Resultado**
-Os arquivos HTML serão atualizados e abertos automaticamente no navegador com as imagens!
-
-## 🎨 Características dos Cards com Imagens
-
-### **Design Responsivo**
-- ✅ Cards com tamanho fixo de **286x180px** (imagem)
-- ✅ Grid adaptável que centraliza os cards
-- ✅ Efeito hover (card sobe ao passar o mouse)
-- ✅ Sombras e bordas arredondadas
-
-### **Estrutura do Card**
-```
-┌─────────────────────┐
-│                     │
-│  IMAGEM 286x180px   │  ← Tamanho fixo
-│                     │
-├─────────────────────┤
-│  Título (h3)        │
-│  Descrição (p)      │
-└─────────────────────┘
-```
-
-## 🔄 Compatibilidade com Itens Sem Imagem
-
-**O campo "imagem" é OPCIONAL!** Se você não adicionar o campo `"imagem"`, o card será gerado normalmente apenas com texto:
-
-```json
-{
-  "nome": "Item Sem Imagem",
-  "descricao": "Este item não tem imagem e funcionará normalmente"
-}
-```
-
-Resultado: Card apenas com título e descrição (sem espaço para imagem).
-
-## 💡 Dicas e Boas Práticas
-
-### **Nomenclatura de Arquivos**
-✅ **BOM**: `pizza-constelacao.jpg`, `cerveja-dragao.jpg`  
-❌ **RUIM**: `Pizza da Constelação.jpg`, `foto 1.jpg`
-
-### **Otimização de Imagens**
-- Use ferramentas como [TinyPNG](https://tinypng.com/) para comprimir imagens
-- Mantenha tamanho consistente: **286x180px** para melhor resultado
-- Evite imagens muito grandes (acima de 1MB)
-
-### **Caminhos das Imagens**
-- Sempre use caminhos absolutos começando com `/assets/`
-- Não use caminhos relativos como `../assets/` ou `./images/`
-- Certifique-se de que o caminho corresponde exatamente à localização do arquivo
-
-### **Imagens Placeholder**
-Se não tiver uma imagem específica, você pode:
-1. Deixar o campo `"imagem"` vazio ou omiti-lo
-2. Usar uma imagem genérica: `"/assets/images/placeholder.jpg"`
-
-## 🖼️ Exemplo Completo
-
-Veja o arquivo `data/exemplo_com_imagens.json` para um exemplo completo de como estruturar o JSON com imagens.
-
-## 🛠️ Solução de Problemas
-
-### **Imagem não aparece**
-- ✅ Verifique se o caminho está correto
-- ✅ Confirme que o arquivo existe na pasta
-- ✅ Verifique a extensão do arquivo (.jpg, .png)
-- ✅ Regenere o HTML executando o script novamente
-
-### **Imagem aparece distorcida**
-- ✅ Use `object-fit: cover` (já configurado no CSS)
-- ✅ Mantenha proporção de aspecto consistente
-
-### **Site carrega lento**
-- ✅ Comprima as imagens
-- ✅ Reduza o tamanho dos arquivos
-- ✅ Use formato JPG para fotos (menor que PNG)
-
-## 📊 Resumo Rápido
-
-| Aspecto | Valor |
-|---------|-------|
-| **Campo no JSON** | `"imagem": "/assets/images/categoria/arquivo.jpg"` |
-| **Tamanho recomendado** | **286x180px** |
-| **Peso máximo** | 500KB |
-| **Formatos aceitos** | JPG, PNG, WebP |
-| **Campo obrigatório?** | ❌ Não (opcional) |
-| **Tamanho no card** | **286x180px** (fixo) |
-
----
-
-**Agora seus cardápios terão imagens lindas! 🎨📸**
+## Solução de Problemas
+- "Imagem não aparece":
+  - Confirme que o item possui imagem (Admin) ou que o arquivo existe em `catalogo_pronto/images/...` e que o JSON referencia `/assets/images/...` corretamente.
+  - Reexecute `python manage.py popular_banco` (apaga e recria os dados).
+- 404 em imagens de layout (logo/slider/fundo): são arquivos estáticos em `cardapio/static/images`; não fazem parte dos modelos.

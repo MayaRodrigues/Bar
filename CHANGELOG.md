@@ -1,5 +1,27 @@
 # 📋 Changelog - Sistema de Cardápios
 
+## 🚀 Versão 3.0 – Migração completa para Django (dinâmico)
+
+### Principais mudanças
+- Páginas dinâmicas com Django (home, cardápio, jogos)
+- CRUD completo via Django Admin com personalizações e inlines
+- Rastreamento de disponibilidade de jogos (cópias disponíveis)
+- Imagens de modelos armazenadas no banco via `django-db-file-storage`
+- Camada de compatibilidade local para servir arquivos: `/files/get/` e `/files/download/`
+- Script `setup_django.ps1` automatiza venv, dependências, migrações, superusuário e população
+- Comando `popular_banco` importa JSONs e imagens automaticamente
+- Pasta renomeada: `data/` → `catalogo_pronto/` (com `images/`)
+- Pasta de media renomeada: `media/` → `uploads/`
+- Limpeza de estáticos: imagens de modelos saíram de `cardapio/static/images` (mantidos apenas logo/slider/fundo)
+
+### Documentação atualizada
+- DJANGO_SETUP.md (setup e operação)
+- PROXIMOS_PASSOS.md (execução, dicas e avisos)
+- COMO_ADICIONAR_IMAGENS.md (fluxo via Admin e via `catalogo_pronto`)
+- README.md (Django como versão atual)
+- REQUISITOS_ATENDIDOS.md (armazenamento de imagens no banco)
+
+---
 ## 🎨 Versão 2.0 - Suporte a Imagens nos Cards
 
 ### ✨ Novidades

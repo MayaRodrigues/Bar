@@ -1,8 +1,8 @@
 # 🍺 Luna & Hops Tavern - Sistema de Geração de Cardápios
 
-> **🆕 NOVA VERSÃO DJANGO DISPONÍVEL!**  
-> Este projeto agora possui uma versão completa em Django com geração dinâmica de páginas e sistema de gerenciamento via Django Admin.  
-> **📖 Veja [DJANGO_SETUP.md](DJANGO_SETUP.md) para instruções da nova versão.**
+> **✅ Versão atual: Django (dinâmica, com banco de dados)**  
+> O projeto roda em Django com páginas dinâmicas, CRUD pelo Django Admin e imagens armazenadas no banco (via `django-db-file-storage`).  
+> **📖 Guia recomendado: [DJANGO_SETUP.md](DJANGO_SETUP.md)**
 
 ## 📖 Sobre o Projeto  
 Este projeto foi desenvolvido como parte da disciplina **Projeto e Desenvolvimento de Sistemas Web (CC6PDSW)**, no curso de **Ciência da Computação – UTFPR**.  
@@ -11,12 +11,12 @@ O objetivo é criar um **site de um bar de jogos de tabuleiro** utilizando **HTM
 
 ## 🔄 Versões do Projeto
 
-### **Versão 1: Geração Estática (Avaliação Anterior)**
+### **Versão 1 (LEGADO): Geração Estática (Avaliação Anterior)**
 - Páginas HTML geradas por scripts Python
 - Dados em arquivos JSON
 - Documentação neste arquivo
 
-### **Versão 2: Django Framework (Nova Avaliação)** ⭐
+### **Versão 2: Django Framework (Atual)** ⭐
 - Páginas geradas dinamicamente pelo Django
 - Banco de dados com modelos Django
 - Django Admin para CRUD completo
@@ -41,26 +41,22 @@ Este projeto contém um sistema automatizado para gerar páginas HTML de cardáp
 ✅ **HTML/CSS Gerado**: Todo o HTML e estrutura são gerados pelo script Python  
 ✅ **Validação de Entrada**: O script valida entradas e não encerra em caso de erro  
 
-## 📁 Estrutura de Arquivos
+## 📁 Estrutura de Arquivos (atual)
 
 ```
 Bar/
-├── data/
-│   ├── comidas.json              # Dados de comidas, bebidas e sobremesas
-│   └── jogos.json                # Dados de jogos de tabuleiro e máquinas arcade
-├── assets/                       # Imagens e vídeos do site
-│   ├── images/
-│   └── videos/
-├── scripts/
-│   ├── gerar_css.py              # CSS padrão embutido (usado quando site/style.css não existe)
-│   ├── gerar_html.py             # Geração de HTML a partir dos JSONs
-│   └── site.py                   # Script principal (modo interativo e linha de comando)
-├── site/
-│   ├── index.html                # Página inicial
-│   ├── style.css                 # Estilos do site
-│   ├── cardapio_comida.html      # Gerado automaticamente
-│   └── cardapio_jogos.html       # Gerado automaticamente
-└── README.md
+├── cardapio/                     # App Django
+│   ├── templates/cardapio/       # Templates (index, cardápios)
+│   ├── static/                   # Assets de UI (logo, slides, fundo)
+│   └── management/commands/      # popular_banco.py
+├── bar_core/                     # Configurações do projeto
+├── catalogo_pronto/              # JSON + imagens para popular o banco
+│   ├── comidas.json
+│   ├── jogos.json
+│   └── images/
+├── uploads/                      # Uploads se algum storage em filesystem for usado
+├── setup_django.ps1              # Setup automatizado
+└── requirements.txt
 ```
 
 ## 🚀 Como Usar
