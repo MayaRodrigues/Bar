@@ -96,8 +96,21 @@ class Categoria(models.Model):
 class ItemCardapio(models.Model):
     nome = models.CharField(max_length=200, unique=True)
     descricao = models.TextField()
-    imagem = models.ImageField(upload_to='cardapio_imagens/')
+    # Imagem armazenada no banco via django-db-file-storage
+    imagem = models.ImageField(
+        upload_to='cardapio.ItemCardapioImage/bytes/filename/mimetype',
+        blank=True,
+        null=True,
+    )
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, related_name='itens_cardapio')
+
+    def save(self, *args, **kwargs):
+        delete_file_if_needed(self, 'imagem')
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        super().delete(*args, **kwargs)
+        delete_file(self, 'imagem')
 ```
 
 #### **3. Jogo**
@@ -106,8 +119,21 @@ class Jogo(models.Model):
     nome = models.CharField(max_length=200, unique=True)
     tipo = models.CharField(max_length=100)
     descricao = models.TextField()
-    imagem = models.ImageField(upload_to='jogos_imagens/')
+    # Imagem armazenada no banco via django-db-file-storage
+    imagem = models.ImageField(
+        upload_to='cardapio.JogoImage/bytes/filename/mimetype',
+        blank=True,
+        null=True,
+    )
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, related_name='jogos')
+
+    def save(self, *args, **kwargs):
+        delete_file_if_needed(self, 'imagem')
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        super().delete(*args, **kwargs)
+        delete_file(self, 'imagem')
 ```
 
 #### **4. CopiaJogo**
@@ -276,7 +302,7 @@ jogo = models.ForeignKey(Jogo, on_delete=models.CASCADE)
 
 ### **2. Script de Setup Automatizado**
 - **Arquivo:** `setup_django.ps1`
-- **Função:** Automatiza instalação, migrações e população do banco
+- **Função:** Cria/ativa venv, instala dependências, executa migrações, cria superusuário (opcional) e pergunta se deseja popular o banco com o catálogo pronto (`catalogo_pronto/`).
 
 ### **3. Documentação Completa**
 - `DJANGO_SETUP.md` - Guia completo de configuração e uso
@@ -288,10 +314,10 @@ jogo = models.ForeignKey(Jogo, on_delete=models.CASCADE)
 - Indicadores visuais de disponibilidade
 - CSS customizado para disponibilidade de jogos
 
-### **5. Configurações de Media**
-- Upload de imagens via Django Admin
-- Configuração de `MEDIA_URL` e `MEDIA_ROOT`
-- Servir arquivos de media em desenvolvimento
+### **5. Armazenamento de Imagens**
+- Imagens dos modelos são salvas diretamente no banco via `django-db-file-storage`
+- URLs públicas servidas por `/files/get/?name=...` (compat local)
+- Uploads em filesystem (se houver) usam `MEDIA_URL = '/uploads/'` e `MEDIA_ROOT = BASE_DIR / 'uploads'`
 
 ---
 

@@ -22,11 +22,11 @@ Execute o script PowerShell que automatiza todo o processo:
 ```
 
 Este script irá:
-1. Ativar o ambiente virtual
+1. Criar/ativar o ambiente virtual (se necessário)
 2. Instalar dependências
 3. Executar migrações
 4. Perguntar se deseja criar superusuário
-5. Perguntar se deseja popular o banco
+5. Perguntar se deseja popular o banco com o catálogo pronto (`catalogo_pronto/`)
 
 ### **Opção 2: Passo a Passo Manual**
 
@@ -66,24 +66,9 @@ Após iniciar o servidor com `python manage.py runserver`:
 
 ## 📝 Tarefas Importantes
 
-### **1. Adicionar Imagens via Django Admin**
+### **1. Imagens do cardápio/jogos**
 
-O comando `popular_banco` cria todos os registros, mas **não adiciona as imagens**. Você precisa:
-
-1. Acessar http://127.0.0.1:8000/admin/
-2. Fazer login
-3. Para cada item do cardápio:
-   - Clicar em "Itens do Cardápio"
-   - Editar cada item
-   - Fazer upload da imagem correspondente
-   - Salvar
-4. Para cada jogo:
-   - Clicar em "Jogos"
-   - Editar cada jogo
-   - Fazer upload da imagem correspondente
-   - Salvar
-
-**Dica:** As imagens originais estão em `cardapio/static/assets/images/`
+O comando `popular_banco` agora importa automaticamente as imagens para o banco a partir de `catalogo_pronto/images/...`, conforme os caminhos definidos nos JSONs (`/assets/images/...`). Use o Admin apenas para alterações manuais posteriores (substituições/novos itens).
 
 ### **2. Testar Funcionalidade de Disponibilidade**
 
@@ -198,7 +183,7 @@ Se quiser expandir o projeto:
 
 2. **O arquivo `db.sqlite3` contém todos os dados** - Faça backup se necessário
 
-3. **A pasta `media/` será criada automaticamente** quando você fizer upload de imagens
+3. **Uploads em filesystem** (se houver) vão para `uploads/` (renomeado de `media/`). Por padrão, imagens dos modelos são salvas no banco.
 
 4. **Em produção, configure:**
    - `DEBUG = False` em settings.py
@@ -218,9 +203,9 @@ python manage.py migrate
 ```
 
 ### Imagens não aparecem
-1. Verifique se fez upload via Admin
+1. Verifique se rodou `python manage.py popular_banco` ou fez upload via Admin
 2. Verifique se o servidor está rodando
-3. Acesse http://127.0.0.1:8000/media/ para testar
+3. As imagens dos modelos são servidas por `/files/get/?name=...` (storage em banco). Os estáticos (logo/slider/fundo) ficam em `cardapio/static/images`.
 
 ### CSS não carrega
 1. Verifique se `STATICFILES_DIRS` está configurado em settings.py

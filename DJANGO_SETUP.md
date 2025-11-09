@@ -12,6 +12,12 @@ Esta é a nova versão do site do bar de jogos, agora desenvolvida com **Django 
 
 ## 🚀 Como Configurar e Executar
 
+Recomendado: use o script automatizado `setup_django.ps1`, que cria/ativa a venv (se necessário), instala dependências, roda migrações, cria superusuário (opcional) e pergunta se deseja popular o banco com o catálogo pronto (JSON + imagens) de `catalogo_pronto/`.
+
+```powershell
+./setup_django.ps1
+```
+
 ### **Passo 1: Instalar Dependências**
 
 Certifique-se de que o ambiente virtual está ativado e instale as dependências:
@@ -151,10 +157,11 @@ Bar/
 ├── bar_core/                      # Configurações do projeto
 │   ├── settings.py
 │   └── urls.py
-├── data/                          # Arquivos JSON originais
+├── catalogo_pronto/               # Catálogo pronto (JSON + imagens) usado pelo popular_banco
 │   ├── comidas.json
-│   └── jogos.json
-├── media/                         # Uploads de imagens (criado automaticamente)
+│   ├── jogos.json
+│   └── images/
+├── uploads/                       # Pasta de uploads (somente se algum upload usar filesystem)
 ├── db.sqlite3                     # Banco de dados SQLite
 ├── manage.py
 └── requirements.txt
@@ -183,7 +190,9 @@ python manage.py popular_banco
 
 ## 🎨 Adicionando Imagens
 
-### **Método 1: Via Django Admin**
+Este projeto armazena as imagens dos modelos diretamente no banco de dados usando `django-db-file-storage`. Você pode adicionar imagens de duas formas:
+
+### **Método 1: Via Django Admin (recomendado para alterações manuais)**
 
 1. Acesse o Django Admin
 2. Edite um item do cardápio ou jogo
@@ -191,17 +200,12 @@ python manage.py popular_banco
 4. Faça upload da imagem
 5. Salve
 
-### **Método 2: Copiar Imagens Existentes**
+### **Método 2: Popular automaticamente a partir do catálogo pronto**
 
-As imagens dos arquivos estáticos podem ser copiadas para a pasta `media/`:
+O comando `popular_banco` importa as imagens a partir de `catalogo_pronto/images/...` conforme os caminhos presentes nos JSONs (`/assets/images/...`). Ele também copia automaticamente imagens de `cardapio/static/images/...` para `catalogo_pronto/images/...` caso necessário.
 
 ```bash
-# Criar estrutura de pastas
-mkdir media\cardapio_imagens
-mkdir media\jogos_imagens
-
-# Copiar imagens (exemplo)
-# Depois adicione via admin ou ajuste o comando popular_banco.py
+python manage.py popular_banco
 ```
 
 ## 📊 Modelos do Banco de Dados
@@ -316,9 +320,9 @@ python manage.py migrate
 ```
 
 ### **Imagens não aparecem**
-- Verifique se `MEDIA_URL` e `MEDIA_ROOT` estão configurados em `settings.py`
-- Certifique-se de que as URLs de media estão em `urls.py`
-- Faça upload das imagens via Django Admin
+- As imagens dos modelos são servidas por URLs iniciando em `/files/get/?name=...` (camadas de compatibilidade com `django-db-file-storage`).
+- Garanta que você populou o banco via Admin ou `popular_banco` e que os registros possuem imagem vinculada.
+- Em desenvolvimento, os arquivos estáticos (logo/slider/fundo) são servidos via `{% static %}` e permanecem em `cardapio/static/images`.
 
 ### **Comando popular_banco não encontrado**
 ```bash
