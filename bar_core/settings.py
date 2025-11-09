@@ -120,8 +120,8 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'cardapio' / 'static']
 
 # Media files (User uploaded content)
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = '/uploads/'
+MEDIA_ROOT = BASE_DIR / 'uploads'
 
 # Store uploaded files in the database
 DEFAULT_FILE_STORAGE = 'db_file_storage.storage.DatabaseFileStorage'

@@ -19,7 +19,7 @@ env/
 *.pot
 *.pyc
 staticfiles/
-media/
+uploads/
 
 # SQLite database and related
 *.sqlite3

@@ -23,7 +23,7 @@ class Command(BaseCommand):
         # Caminhos base
         project_root = Path(__file__).resolve().parent.parent.parent.parent
         static_root = project_root / 'cardapio' / 'static'
-        data_images_root = project_root / 'data' / 'images'
+        data_images_root = project_root / 'catalogo_pronto' / 'images'
 
         def image_path_from_json(json_path: str) -> Path:
             """
@@ -35,8 +35,11 @@ class Command(BaseCommand):
             # Substitui 'assets/' por '' porque as imagens estão em 'static/images/...'
             if rel.startswith('assets/'):
                 rel = rel.replace('assets/', '', 1)
-            # Primeiro tenta em data/images
-            candidate_data = data_images_root / rel
+            # Para a pasta data/images usamos o caminho SEM o prefixo 'images/'
+            # Ex.: 'images/jogos/...' -> 'jogos/...'
+            rel_no_images_prefix = rel[7:] if rel.startswith('images/') else rel
+            # Primeiro tenta em catalogo_pronto/images
+            candidate_data = data_images_root / rel_no_images_prefix
             if candidate_data.exists():
                 return candidate_data
             # Fallback para static
@@ -49,10 +52,11 @@ class Command(BaseCommand):
             rel = json_path.lstrip('/')
             if rel.startswith('assets/'):
                 rel = rel.replace('assets/', '', 1)
-            source_static = static_root / rel
-            target_data = data_images_root / rel
+            source_static = static_root / rel  # mantém 'images/...'
+            rel_no_images_prefix = rel[7:] if rel.startswith('images/') else rel
+            target_data = data_images_root / rel_no_images_prefix
 
-            # Se existir no static e não no data, copia para organizar na pasta data/images
+            # Se existir no static e não no catalogo_pronto, copia para organizar na pasta catalogo_pronto/images
             try:
                 if source_static.exists() and not target_data.exists():
                     target_data.parent.mkdir(parents=True, exist_ok=True)
@@ -81,7 +85,7 @@ class Command(BaseCommand):
         
         # Popula cardápio de comidas
         self.stdout.write('Populando cardápio de comidas...')
-        comidas_json = project_root / 'data' / 'comidas.json'
+        comidas_json = project_root / 'catalogo_pronto' / 'comidas.json'
         
         if comidas_json.exists():
             with open(comidas_json, 'r', encoding='utf-8') as f:
@@ -124,7 +128,7 @@ class Command(BaseCommand):
         
         # Popula jogos
         self.stdout.write('Populando jogos...')
-        jogos_json = project_root / 'data' / 'jogos.json'
+        jogos_json = project_root / 'catalogo_pronto' / 'jogos.json'
         
         if jogos_json.exists():
             with open(jogos_json, 'r', encoding='utf-8') as f:
@@ -175,4 +179,4 @@ class Command(BaseCommand):
                 )
                 self.stdout.write(f'    - Cópia criada: {jogo.nome[:3].upper()}-001')
         
-        self.stdout.write(self.style.SUCCESS('\n✅ Banco de dados populado com sucesso (com imagens)!'))
+        self.stdout.write(self.style.SUCCESS('\nBanco de dados populado com sucesso (com imagens)!'))

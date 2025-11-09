@@ -10,7 +10,11 @@ Write-Host ""
 if (-not $env:VIRTUAL_ENV) {
     Write-Host "Ambiente virtual nao esta ativo!" -ForegroundColor Yellow
     Write-Host "Ativando ambiente virtual..." -ForegroundColor Cyan
-    .\venv\Scripts\Activate.ps1
+    if (-not (Test-Path ".\venv\Scripts\Activate.ps1")) {
+        Write-Host "Ambiente virtual nao encontrado. Criando venv..." -ForegroundColor Yellow
+        python -m venv venv
+    }
+    & ".\venv\Scripts\Activate.ps1"
 }
 
 Write-Host "Ambiente virtual ativo" -ForegroundColor Green
